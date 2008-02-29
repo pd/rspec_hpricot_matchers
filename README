@@ -1,0 +1,5 @@
+= rspec_hpricot_matchers
+
+An implementation of have_tag() and with_tag(), as in rspec_on_rails,
+but using Hpricot rather than merely wrapping assert_select().
+
