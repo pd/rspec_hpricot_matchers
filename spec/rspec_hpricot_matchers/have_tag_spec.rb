@@ -46,4 +46,11 @@ describe 'have_tag' do
       e.should_not have_tag('dd')
     end
   end
+
+  it "should treat multiple nested have_tag() expectations as a logical AND" do
+    @html.should have_tag('ul') do |e|
+      e.should have_tag('li')
+      e.should_not have_tag('dd')
+    end
+  end
 end
