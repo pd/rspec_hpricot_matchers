@@ -33,4 +33,17 @@ describe 'have_tag' do
   it "should match negatively against a Regexp describing the inner text" do
     @html.should_not have_tag('li', /GREG/)
   end
+
+  # this is lame but works for now:
+  it "should support nested have_tag() calls" do
+    @html.should have_tag('ul') do |e|
+      e.should have_tag('li')
+    end
+  end
+
+  it "should support negated nested have_tag() calls" do
+    @html.should have_tag('ul') do |e|
+      e.should_not have_tag('dd')
+    end
+  end
 end
