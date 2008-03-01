@@ -30,7 +30,7 @@ module RspecHpricotMatchers
         matched_elements = matched_elements.select do |e|
           begin
             yield e
-          rescue
+          rescue Spec::Expectations::ExpectationNotMetError
             false
           else
             true
