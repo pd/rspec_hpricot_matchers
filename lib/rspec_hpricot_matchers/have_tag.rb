@@ -1,8 +1,14 @@
 module RspecHpricotMatchers
   class HaveTag
-    def initialize(selector, inner_text, &block)
+    def initialize(selector, inner_text_or_options, options, &block)
       @selector = selector
-      @inner_text = inner_text
+      if Hash === inner_text_or_options
+        @inner_text = nil
+        @options = inner_text_or_options
+      else
+        @inner_text = inner_text_or_options
+        @options = options
+      end
     end
 
     def matches?(actual)
@@ -38,6 +44,16 @@ module RspecHpricotMatchers
         end
       end
 
+      if @options[:count]
+        return false unless matched_elements.length == @options[:count]
+      end
+      if @options[:minimum]
+        return false unless matched_elements.length >= @options[:minimum]
+      end
+      if @options[:maximum]
+        return false unless matched_elements.length <= @options[:maximum]
+      end
+
       !matched_elements.empty?
     end
 
@@ -52,7 +68,7 @@ module RspecHpricotMatchers
     end
   end
 
-  def have_tag(selector, inner_text = nil, &block)
-    HaveTag.new(selector, inner_text, &block)
+  def have_tag(selector, inner_text_or_options = nil, options = {}, &block)
+    HaveTag.new(selector, inner_text_or_options, options, &block)
   end
 end

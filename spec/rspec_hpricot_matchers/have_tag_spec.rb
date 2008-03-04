@@ -35,21 +35,62 @@ describe 'have_tag' do
   end
 
   it "should support nested have_tag() calls" do
-    @html.should have_tag('ul') do |e|
-      e.should have_tag('li')
+    @html.should have_tag('ul') do |ul|
+      ul.should have_tag('li')
     end
   end
 
   it "should support negated nested have_tag() calls" do
-    @html.should have_tag('ul') do |e|
-      e.should_not have_tag('dd')
+    @html.should have_tag('ul') do |ul|
+      ul.should_not have_tag('dd')
     end
   end
 
   it "should treat multiple nested have_tag() expectations as a logical AND" do
-    @html.should have_tag('ul') do |e|
-      e.should have_tag('li')
-      e.should_not have_tag('dd')
+    @html.should have_tag('ul') do |ul|
+      ul.should have_tag('li')
+      ul.should_not have_tag('dd')
+    end
+  end
+end
+
+describe 'have_tag with counts' do
+  before(:each) do
+    @html = <<-EOHTML
+      <ul>
+        <li>Foo</li>
+        <li>Bar</li>
+        <li>Foo again</li>
+        <li><a href="/baz">With inner elements</a></li>
+      </ul>
+    EOHTML
+  end
+
+  it "should treat :count as expecting exactly n matched elements" do
+    @html.should have_tag('li', :count => 4)
+    @html.should_not have_tag('li', :count => 3)
+    @html.should_not have_tag('li', :count => 5)
+  end
+
+  it "should treat :minimum as expecting at least n matched elements" do
+    (0..4).each { |n| @html.should have_tag('li', :minimum => n) }
+    @html.should_not have_tag('li', :minimum => 5)
+  end
+
+  it "should treat :maximum as expecting at most n matched elements" do
+    @html.should_not have_tag('li', :maximum => 3)
+    @html.should have_tag('li', :maximum => 4)
+    @html.should have_tag('li', :maximum => 5)
+  end
+
+  it "should support matching of content while specifying a count" do
+    @html.should have_tag('li', /foo/i, :count => 2)
+  end
+
+  it "should work when the have_tag is nested" do
+    @html.should have_tag('ul') do |ul|
+      ul.should have_tag('li', :minimum => 2)
+      ul.should have_tag('li', /foo/i, :count => 2)
     end
   end
 end
