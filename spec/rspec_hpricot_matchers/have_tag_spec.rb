@@ -66,10 +66,15 @@ describe 'have_tag with counts' do
     EOHTML
   end
 
-  it "should treat :count as expecting exactly n matched elements" do
+  it "should treat an integer :count as expecting exactly n matched elements" do
     @html.should have_tag('li', :count => 4)
     @html.should_not have_tag('li', :count => 3)
     @html.should_not have_tag('li', :count => 5)
+  end
+
+  it "should treat a range :count as expecting between x and y matched elements" do
+    @html.should have_tag('li', :count => 1..5)
+    @html.should_not have_tag('li', :count => 2..3)
   end
 
   it "should treat :minimum as expecting at least n matched elements" do
