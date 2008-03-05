@@ -45,7 +45,7 @@ module RspecHpricotMatchers
       end
 
       if @options[:count]
-        return false unless matched_elements.length == @options[:count]
+        return false unless @options[:count] === matched_elements.length
       end
       if @options[:minimum]
         return false unless matched_elements.length >= @options[:minimum]
