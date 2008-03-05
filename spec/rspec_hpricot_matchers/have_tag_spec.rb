@@ -1,5 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
+unless defined?(SpecFailed)
+  SpecFailed = Spec::Expectations::ExpectationNotMetError
+end
+
 describe 'have_tag' do
   before(:each) do
     @html = "<ul><li>An egregiously long string</li></ul>"
@@ -44,13 +48,45 @@ describe 'have_tag' do
     @html.should_not have_tag('li', /GREG/)
   end
 
-  it "should support nested have_tag() calls" do
+  it "should include the body in the failure message" do
+    lambda {
+      @html.should have_tag('abbr')
+    }.should raise_error(SpecFailed, /#{Regexp.escape(@html)}/)
+  end
+
+  it "should include the selector in the failure message" do
+    lambda {
+      @html.should have_tag('abbr')
+    }.should raise_error(SpecFailed, /"abbr"/)
+  end
+
+  it "should include the expected inner text if provided" do
+    lambda {
+      @html.should have_tag('li', /something else/)
+    }.should raise_error(SpecFailed, %r{/something else/})
+  end
+end
+
+describe 'nested have_tag' do
+  before(:each) do
+    @html = "<ul><li>An egregiously long string</li></ul>"
+  end
+
+  it "should fail when the outer selector fails" do
+    lambda {
+      @html.should have_tag('dl') do |dl|
+        dl.should have_tag('li')
+      end
+    }.should raise_error(SpecFailed)
+  end
+
+  it "should match the inner expectations against the elements matched by the outer selector" do
     @html.should have_tag('ul') do |ul|
       ul.should have_tag('li')
     end
   end
 
-  it "should support negated nested have_tag() calls" do
+  it "should support negated inner expectations" do
     @html.should have_tag('ul') do |ul|
       ul.should_not have_tag('dd')
     end
