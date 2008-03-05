@@ -80,6 +80,12 @@ describe 'have_tag' do
       li.should_not have_tag('span')
     end
   end
+
+  it "should yield element which respond to #body" do
+    @html.should have_tag('ul') do |ul|
+      ul.should respond_to(:body)
+    end
+  end
 end
 
 describe 'have_tag with counts' do
