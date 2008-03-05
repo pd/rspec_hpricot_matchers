@@ -195,4 +195,22 @@ describe 'have_tag with counts' do
       @html.should_not have_tag('li', :count => 4)
     }.should raise_error(SpecFailed, /to have 4 elements matching/)
   end
+
+  it "should describe the :minimum case using 'at least ...'" do
+    lambda {
+      @html.should have_tag('li', :minimum => 80)
+    }.should raise_error(SpecFailed, /to have at least 80 elements matching/)
+  end
+
+  it "should describe the :maximum case using 'at most ...'" do
+    lambda {
+      @html.should have_tag('li', :maximum => 2)
+    }.should raise_error(SpecFailed, /to have at most 2 elements matching/)
+  end
+
+  it "should describe the :minimum and :maximum case using 'at least ... and at most ...'" do
+    lambda {
+      @html.should have_tag('li', :minimum => 8, :maximum => 30)
+    }.should raise_error(SpecFailed, /to have at least 8 and at most 30 elements matching/)
+  end
 end

@@ -62,18 +62,33 @@ module RspecHpricotMatchers
     end
 
     def failure_message
-      with_inner_text   = @inner_text ? " with inner text #{@inner_text.inspect}" : ""
-      explanation       = @actual_count ? "but found #{@actual_count}" : "but did not"
-      count_explanation = @options[:count] ? "#{@options[:count]} elements matching" : "an element matching"
-      "expected\n#{@hdoc.to_s}\nto have #{count_explanation} #{@selector.inspect}#{with_inner_text}, #{explanation}"
+      explanation = @actual_count ? "but found #{@actual_count}" : "but did not"
+      "expected\n#{@hdoc.to_s}\nto have #{failure_count_phrase} #{failure_selector_phrase}, #{explanation}"
     end
 
     def negative_failure_message
-      with_inner_text = @inner_text ? " with inner text #{@inner_text.inspect}" : ""
-      explanation     = @actual_count ? "but found #{@actual_count}" : "but did"
-      count_explanation = @options[:count] ? "#{@options[:count]} elements matching" : "an element matching"
-      "did not expect\n#{@hdoc.to_s}\nto have #{count_explanation} #{@selector.inspect}#{with_inner_text}, #{explanation}"
+      explanation = @actual_count ? "but found #{@actual_count}" : "but did"
+      "did not expect\n#{@hdoc.to_s}\nto have #{failure_count_phrase} #{failure_selector_phrase}, #{explanation}"
     end
+
+    private
+      def failure_count_phrase
+        if @options[:count]
+          "#{@options[:count]} elements matching"
+        elsif @options[:minimum] || @options[:maximum]
+          count_explanations = []
+          count_explanations << "at least #{@options[:minimum]}" if @options[:minimum]
+          count_explanations << "at most #{@options[:maximum]}"  if @options[:maximum]
+          "#{count_explanations.join(' and ')} elements matching"
+        else
+          "an element matching"
+        end
+      end
+
+      def failure_selector_phrase
+        phrase = @selector.inspect
+        phrase << (@inner_text ? " with inner text #{@inner_text.inspect}" : "")
+      end
   end
 
   def have_tag(selector, inner_text_or_options = nil, options = {}, &block)
