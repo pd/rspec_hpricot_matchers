@@ -47,6 +47,7 @@ module RspecHpricotMatchers
         end
       end
 
+      @actual_count = matched_elements.length
       if @options[:count]
         return false unless @options[:count] === matched_elements.length
       end
@@ -61,13 +62,17 @@ module RspecHpricotMatchers
     end
 
     def failure_message
-      with_inner_text = @inner_text ? " with inner text #{@inner_text.inspect}" : ""
-      "expected #{@actual.inspect} to have tag #{@selector.inspect}#{with_inner_text}, but did not"
+      with_inner_text   = @inner_text ? " with inner text #{@inner_text.inspect}" : ""
+      explanation       = @actual_count ? "but found #{@actual_count}" : "but did not"
+      count_explanation = @options[:count] ? "#{@options[:count]} elements matching" : "an element matching"
+      "expected\n#{@hdoc.to_s}\nto have #{count_explanation} #{@selector.inspect}#{with_inner_text}, #{explanation}"
     end
 
     def negative_failure_message
       with_inner_text = @inner_text ? " with inner text #{@inner_text.inspect}" : ""
-      "did not expect #{@actual.inspect} to have tag #{@selector.inspect}#{with_inner_text}, but did"
+      explanation     = @actual_count ? "but found #{@actual_count}" : "but did"
+      count_explanation = @options[:count] ? "#{@options[:count]} elements matching" : "an element matching"
+      "did not expect\n#{@hdoc.to_s}\nto have #{count_explanation} #{@selector.inspect}#{with_inner_text}, #{explanation}"
     end
   end
 

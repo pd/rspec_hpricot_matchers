@@ -168,4 +168,31 @@ describe 'have_tag with counts' do
       ul.should have_tag('li', /foo/i, :count => 2)
     end
   end
+
+  it "should include the actual number of elements matched in the failure message" do
+    lambda {
+      @html.should have_tag('li', :count => 3)
+    }.should raise_error(SpecFailed, /found 4/)
+    lambda {
+      @html.should have_tag('li', :count => 5)
+    }.should raise_error(SpecFailed, /found 4/)
+  end
+
+  it "should include the actual number of elements matched in the negative failure message" do
+    lambda {
+      @html.should_not have_tag('li', :count => 4)
+    }.should raise_error(SpecFailed, /found 4/)
+  end
+
+  it "should include the expected number of elements in the failure message" do
+    lambda {
+      @html.should have_tag('li', :count => 2)
+    }.should raise_error(SpecFailed, /to have 2 elements matching/)
+  end
+
+  it "should include the expected number of elements in the negative failure message" do
+    lambda {
+      @html.should_not have_tag('li', :count => 4)
+    }.should raise_error(SpecFailed, /to have 4 elements matching/)
+  end
 end
