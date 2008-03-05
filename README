@@ -9,7 +9,7 @@ Hpricot rather than merely wrapping assert_select().
 As its first argument, have_tag() accepts any CSS or XPath selectors
 which are supported by Hpricot.
 
-    body.should have_tag('form[action*=session]')
+    body.should have_tag('form[@action*=session]')
     body.should have_tag('ul > li + li')
 
 Expectations can be placed upon the inner text of the matched element
