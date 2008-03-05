@@ -13,9 +13,12 @@ module RspecHpricotMatchers
 
     def matches?(actual)
       @actual = actual
-      @hdoc = case @actual
-              when String then Hpricot(@actual)
-              when Hpricot then @actual
+      @hdoc = if Hpricot === @actual
+                @actual
+              elsif @actual.respond_to?(:body)
+                Hpricot(@actual.body)
+              else
+                Hpricot(@actual.to_s)
               end
 
       matched_elements = (@hdoc / @selector)

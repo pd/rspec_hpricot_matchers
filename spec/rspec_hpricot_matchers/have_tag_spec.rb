@@ -14,6 +14,16 @@ describe 'have_tag' do
     hdoc.should have_tag('li')
   end
 
+  it "should use the response of #body if the target responds to it" do
+    response = Object.new
+    class << response
+      def body
+        "<ul><li>An egregiously long string</li></ul>"
+      end
+    end
+    response.should have_tag('li')
+  end
+
   it "should not match when the target does not have the selected element" do
     @html.should_not have_tag('dd')
   end
