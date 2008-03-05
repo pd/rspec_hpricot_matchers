@@ -63,3 +63,9 @@ as assert_select did (by way of HTML::Selector):
 I personally rarely use these, and Hpricot's advanced selectors make
 them mostly useless, as far as I can tell, so I am unlikely to
 implement them myself.
+
+This have_tag() further differs from the assert_select-based
+implementation in that the nested have_tag() calls must *all* pass
+on a single selected element in order to be true. This was a source
+of confusion in RSpec ticket #316. There is a spec covering this
+case if you need an example.

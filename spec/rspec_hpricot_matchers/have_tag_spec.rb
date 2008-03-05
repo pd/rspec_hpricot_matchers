@@ -52,6 +52,24 @@ describe 'have_tag' do
       ul.should_not have_tag('dd')
     end
   end
+
+  it "should only match against a single element at a time when nesting expectations (see RSpec LH#316)" do
+    html = <<-EOHTML
+      <ul>
+        <li>
+          <a href="1">1</a>
+        </li>
+        <li>
+          <a href="2">2</a>
+          <span>Hello</span>
+        </li>
+      </ul>
+    EOHTML
+    html.should have_tag('li') do |li|
+      li.should have_tag('a')
+      li.should_not have_tag('span')
+    end
+  end
 end
 
 describe 'have_tag with counts' do
