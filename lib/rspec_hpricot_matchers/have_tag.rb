@@ -21,7 +21,7 @@ module RspecHpricotMatchers
                 Hpricot(@actual.to_s)
               end
 
-      matched_elements = (@hdoc / @selector)
+      matched_elements = @hdoc.search(@selector)
       return false if matched_elements.empty?
 
       if @inner_text
