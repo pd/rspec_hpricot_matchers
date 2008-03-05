@@ -25,6 +25,7 @@ passing an options hash:
     body.should have_tag('abbr', :count => 1)   # exactly one
     body.should have_tag('dt',   :minimum => 4) # at least 4
     body.should have_tag('dd',   :maximum => 4) # at most 4
+    body.should have_tag('a.outgoing', /rspec/i, :count => 2)
 
 The :count key also accepts a Range, making the following equivalent:
 
