@@ -1,5 +1,49 @@
 = rspec_hpricot_matchers
 
-An implementation of have_tag() and with_tag(), as in rspec_on_rails,
-but using Hpricot rather than merely wrapping assert_select().
+An implementation of have_tag(), as in rspec_on_rails, but sitting atop
+Hpricot rather than merely wrapping assert_select().
 
+
+== Usage
+
+As its first argument, have_tag() accepts any CSS or XPath selectors
+which are supported by Hpricot.
+
+    body.should have_tag('form[action*=session]')
+    body.should have_tag('ul > li + li')
+
+Expectations can be placed upon the inner text of the matched element
+by providing another argument, which should be either a String or a
+Regexp:
+
+    body.should have_tag('h1', 'Welcome')
+    body.should have_tag('p', /a very important blurb/i)
+
+Expectations can be placed upon the number of matched elements by
+passing an options hash:
+
+    body.should have_tag('abbr', :count => 1)   # exactly one
+    body.should have_tag('dt',   :minimum => 4) # at least 4
+    body.should have_tag('dd',   :maximum => 4) # at most 4
+
+The :count key also accepts a Range, making the following equivalent:
+
+    body.should have_tag('tr',   :count => 3..5)
+    body.should have_tag('tr',   :minimum => 3,
+                                 :maximum => 5)
+
+
+The usage of with_tag(), however, is no longer supported. Instead, a
+block passed to have_tag() will have each matched element successively
+yielded to it. If none of the blocks return without raising an
+ExpectationNotMetError, the outer have_tag() is treated as having failed:
+
+    body.should have_tag('thead') do |thead|
+      thead.should have_tag('th', :count => 5)
+    end
+
+This also allows arbitrary expectations to be applied from within
+the block, such as:
+
+    [ i'm sure there's an example of this but i can't think of one
+      the bus is too loud. ]
