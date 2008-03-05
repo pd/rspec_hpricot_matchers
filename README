@@ -46,5 +46,20 @@ ExpectationNotMetError, the outer have_tag() is treated as having failed:
 This also allows arbitrary expectations to be applied from within
 the block, such as:
 
-    [ i'm sure there's an example of this but i can't think of one
-      the bus is too loud. ]
+    body.should have_tag('dl dd.sha1') do |dd|
+      dd.inner_text.length.should == 40
+    end
+
+
+== Notes
+
+Currently, this implementation does not support substitution values
+as assert_select did (by way of HTML::Selector):
+
+    # Not yet supported:
+    body.should have_tag('li[class=?]', dom_class)
+    body.should have_tag('tr.person#?', /^person-\d+$/)
+
+I personally rarely use these, and Hpricot's advanced selectors make
+them mostly useless, as far as I can tell, so I am unlikely to
+implement them myself.
