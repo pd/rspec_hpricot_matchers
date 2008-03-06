@@ -123,10 +123,13 @@ describe 'have_tag inner expectations' do
     end
   end
 
-  it "should fail if any expectations fail within the block" do
+  it "should supports arbitrary expectations within the block" do
     html = %q{<span class="sha1">cbc0bd52f99fe19304bccad383694e92b8ee2c71</span>}
-    html.should have_tag('span') do |span|
+    html.should have_tag('span.sha1') do |span|
       span.inner_text.length.should == 40
+    end
+    html.should_not have_tag('span.sha1') do |span|
+      span.inner_text.length.should == 41
     end
   end
 end
