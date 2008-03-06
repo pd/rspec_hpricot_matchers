@@ -67,7 +67,7 @@ describe 'have_tag' do
   end
 end
 
-describe 'nested have_tag' do
+describe 'have_tag inner expectations' do
   before(:each) do
     @html = "<ul><li>An egregiously long string</li></ul>"
   end
@@ -117,9 +117,16 @@ describe 'nested have_tag' do
     end
   end
 
-  it "should yield element which respond to #body" do
+  it "should yield elements which respond to #body" do
     @html.should have_tag('ul') do |ul|
       ul.should respond_to(:body)
+    end
+  end
+
+  it "should fail if any expectations fail within the block" do
+    html = %q{<span class="sha1">cbc0bd52f99fe19304bccad383694e92b8ee2c71</span>}
+    html.should have_tag('span') do |span|
+      span.inner_text.length.should == 40
     end
   end
 end
