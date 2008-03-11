@@ -157,6 +157,10 @@ describe 'have_tag with counts' do
     @html.should_not have_tag('li', :count => 2..3)
   end
 
+  it "should treat a :count of zero as if a negative match were expected" do
+    @html.should have_tag('dd', :count => 0)
+  end
+
   it "should treat :minimum as expecting at least n matched elements" do
     (0..4).each { |n| @html.should have_tag('li', :minimum => n) }
     @html.should_not have_tag('li', :minimum => 5)

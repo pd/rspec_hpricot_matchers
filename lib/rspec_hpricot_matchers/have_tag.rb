@@ -16,7 +16,9 @@ module RspecHpricotMatchers
       @hdoc = hdoc_for(@actual)
 
       matched_elements = @hdoc.search(@selector)
-      return false if matched_elements.empty?
+      if matched_elements.empty?
+        return @options[:count] == 0
+      end
 
       if @inner_text
         matched_elements = filter_on_inner_text(matched_elements)
