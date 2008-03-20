@@ -111,9 +111,19 @@ describe 'have_tag inner expectations' do
         </li>
       </ul>
     EOHTML
-    html.should have_tag('li') do |li|
+
+    html.should have_tag('li', :count => 1) do |li|
+      li.should have_tag('a')
+      li.should have_tag('span')
+    end
+
+    html.should have_tag('li', :count => 1) do |li|
       li.should have_tag('a')
       li.should_not have_tag('span')
+    end
+
+    html.should have_tag('li', :count => 2) do |li|
+      li.should have_tag('a')
     end
   end
 
