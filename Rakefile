@@ -18,6 +18,9 @@ gemspec = Gem::Specification.new do |spec|
     selector support.
   END
   spec.files = FileList['lib/**/*', 'spec/**/*', 'README', 'MIT-LICENSE', 'Rakefile']
+
+  spec.rubyforge_project = 'rspec-hpricot'
+  spec.homepage = 'http://rspec-hpricot.rubyforge.org'
 end
 
 Rake::GemPackageTask.new(gemspec) do |spec|
