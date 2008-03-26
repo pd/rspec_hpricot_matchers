@@ -142,6 +142,10 @@ describe 'have_tag inner expectations' do
       span.inner_text.length.should == 41
     end
   end
+
+  it "should include a description of the inner expectation in the failure message" do
+    pending "No idea how to implement this."
+  end
 end
 
 describe 'have_tag with counts' do
