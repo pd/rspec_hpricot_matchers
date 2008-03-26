@@ -7,7 +7,7 @@ Spec::Rake::SpecTask.new
 gemspec = Gem::Specification.new do |spec|
   spec.name = 'rspec_hpricot_matchers'
   spec.summary = "Implementation of have_tag() rspec matcher using Hpricot"
-  spec.version = '0.1'
+  spec.version = '1.0'
   spec.author = 'Kyle Hargraves'
   spec.email = 'philodespotos@gmail.com'
   spec.description = <<-END
