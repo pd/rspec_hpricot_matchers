@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'hpricot'
 require 'rspec_hpricot_matchers/have_tag'
+require 'rspec_hpricot_matchers/have_link'
 
 # evil hack to duck-type CgiResponse so that nested shoulds can use 
 # +rspec_on_rails+ matchers without remembering to call to_s on it
