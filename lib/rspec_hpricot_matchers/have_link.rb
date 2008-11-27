@@ -3,7 +3,7 @@ module RspecHpricotMatchers
     def initialize(example, url, options={})
       template = example.template
       @options = options
-      link = Hpricot(template.link_to('ignore-me', url, options)).at('/')
+      link = Nokogiri.parse(template.link_to('ignore-me', url, options)).at('/')
       @expected_onclick = link[:onclick]
       @expected_href = link[:href]
     end

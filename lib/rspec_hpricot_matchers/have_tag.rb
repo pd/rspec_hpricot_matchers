@@ -46,12 +46,12 @@ module RspecHpricotMatchers
 
     private
       def hdoc_for(input)
-        if Hpricot === input
+        if Nokogiri::XML::Document === input
           input
         elsif input.respond_to?(:body)
-          Hpricot(input.body)
+          Nokogiri.parse(input.body)
         else
-          Hpricot(input.to_s)
+          Nokogiri.parse(input.to_s)
         end
       end
 
