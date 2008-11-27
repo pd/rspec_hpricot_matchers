@@ -1,9 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-unless defined?(SpecFailed)
-  SpecFailed = Spec::Expectations::ExpectationNotMetError
-end
-
 describe 'have_tag' do
   before(:each) do
     @html = "<ul><li>An egregiously long string</li></ul>"
