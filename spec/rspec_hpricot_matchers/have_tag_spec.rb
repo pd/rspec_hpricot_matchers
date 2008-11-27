@@ -9,8 +9,8 @@ describe 'have_tag' do
     @html.should have_tag('li')
   end
 
-  it "should match against Hpricot documents" do
-    hdoc = Hpricot(@html)
+  it "should match against nokogiri documents" do
+    hdoc = Nokogiri::HTML(@html)
     hdoc.should have_tag('li')
   end
 
