@@ -49,9 +49,9 @@ module RspecHpricotMatchers
         if Nokogiri::XML::Document === input
           input
         elsif input.respond_to?(:body)
-          Nokogiri.parse(input.body)
+          Nokogiri::HTML(input.body)
         else
-          Nokogiri.parse(input.to_s)
+          Nokogiri::HTML(input.to_s)
         end
       end
 
