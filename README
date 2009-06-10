@@ -1,7 +1,10 @@
 = rspec_hpricot_matchers
 
 An implementation of have_tag(), as in rspec_on_rails, but sitting atop
-Hpricot rather than merely wrapping assert_select().
+Nokogiri rather than merely wrapping assert_select().
+
+So at one point it was on Hpricot. But it's not now. Misnomers are more
+fun anyhow.
 
 
 == Installation
