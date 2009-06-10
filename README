@@ -4,7 +4,8 @@ An implementation of have_tag(), as in rspec_on_rails, but sitting atop
 Nokogiri rather than merely wrapping assert_select().
 
 So at one point it was on Hpricot. But it's not now. Misnomers are more
-fun anyhow.
+fun. You're probably better off using something like Webrat::Matchers
+anyhow.
 
 
 == Installation
