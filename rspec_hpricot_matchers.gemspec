@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rspec_hpricot_matchers}
-  s.version = "1.1.0"
+  s.version = "1.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kyle Hargraves"]
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
      "VERSION",
      "lib/rspec_hpricot_matchers.rb",
      "lib/rspec_hpricot_matchers/have_tag.rb",
+     "rspec_hpricot_matchers.gemspec",
      "spec/rspec_hpricot_matchers/have_tag_spec.rb",
      "spec/spec_helper.rb"
   ]
